@@ -17,8 +17,10 @@ namespace WebApp.Controllers
 
         //GET: localhost:<port>/api/values
         [HttpGet] //adnotacja określająca typ/czasownik zapytania
-        public IEnumerable<int> Get()
+        public IEnumerable<int> Get(CancellationToken cancellationToken)
         {
+            Task.Delay(5000, cancellationToken).Wait();
+
             return _values;
         }
 
