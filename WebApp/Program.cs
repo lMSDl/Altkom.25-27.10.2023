@@ -1,4 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
+using Models;
+using Services.Bogus;
+using Services.Bogus.Fakers;
+using Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +13,8 @@ builder.Services.AddSingleton<List<int>>(x => new List<int>
 {
     2,5,843,1,21
 });
+builder.Services.AddSingleton<IShoppingListsService, ShoppingListsService>();
+builder.Services.AddTransient<ShoppingListFaker>();
 
 var app = builder.Build();
 

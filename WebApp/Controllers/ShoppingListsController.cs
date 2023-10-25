@@ -1,25 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
+using Services.Interfaces;
 
 namespace WebApp.Controllers
 {
     public class ShoppingListsController : ApiController
     {
 
-        ICollection<ShoppingList> _shoppingLists = new List<ShoppingList>();
+        private IShoppingListsService _service;
+
+        public ShoppingListsController(IShoppingListsService service)
+        {
+            _service = service;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            await Task.Yield();
-            return Ok(_shoppingLists);
+            return Ok(await _service.ReadAsync());
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            await Task.Yield();
-            var shoppingList = _shoppingLists.SingleOrDefault(x => x.Id == id);
+            var shoppingList = await _service.ReadAsync(id);
 
             if (shoppingList is null)
                 return NotFound();
@@ -30,14 +34,12 @@ namespace WebApp.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, ShoppingList shoppingList)
         {
-            await Task.Yield();
-            var localShoppingList = _shoppingLists.SingleOrDefault(x => x.Id == id);
+            var localShoppingList = await _service.ReadAsync(id);
 
             if (localShoppingList is null)
                 return NotFound();
 
-            _shoppingLists.Remove(localShoppingList);
-            _shoppingLists.Add(shoppingList);
+            await _service.UpdateAsync(id, shoppingList);
 
             return NoContent();
         }
@@ -45,10 +47,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(ShoppingList shoppingList)
         {
-            await Task.Yield();
-
-            shoppingList.Id = _shoppingLists.Select(x => x.Id).DefaultIfEmpty(0).Max() + 1;
-            _shoppingLists.Add(shoppingList);
+            shoppingList = await _service.CreateAsync(shoppingList);
 
             return CreatedAtAction(nameof(Get), new { id = shoppingList.Id }, shoppingList);
         }
@@ -56,13 +55,11 @@ namespace WebApp.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await Task.Yield();
-            var shoppingList = _shoppingLists.SingleOrDefault(x => x.Id == id);
-
+            var shoppingList = await _service.ReadAsync(id);
             if (shoppingList is null)
                 return NotFound();
 
-            _shoppingLists.Remove(shoppingList);
+           await _service.DeleteAsync(id);
 
             return NoContent();
         }
