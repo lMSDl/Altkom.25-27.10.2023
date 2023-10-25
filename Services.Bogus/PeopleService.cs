@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Services.Bogus
 {
-    public class ShoppingListsService : EntityService<ShoppingList>, IShoppingListsService
+    public class PeopleService : EntityService<Person>, IPeopleService
     {
-        public ShoppingListsService(EntityFaker<ShoppingList> faker) : base(faker)
+        public PeopleService(EntityFaker<Person> faker) : base(faker)
         {
         }
     }

@@ -14,7 +14,11 @@ builder.Services.AddSingleton<List<int>>(x => new List<int>
     2,5,843,1,21
 });
 builder.Services.AddSingleton<IShoppingListsService, ShoppingListsService>();
-builder.Services.AddTransient<ShoppingListFaker>();
+builder.Services.AddTransient<EntityFaker<ShoppingList>, ShoppingListFaker>();
+
+
+builder.Services.AddSingleton<IPeopleService, PeopleService>();
+builder.Services.AddTransient<EntityFaker<Person>, PersonFaker>();
 
 var app = builder.Build();
 

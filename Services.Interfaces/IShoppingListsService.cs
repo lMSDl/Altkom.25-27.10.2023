@@ -2,12 +2,8 @@
 
 namespace Services.Interfaces
 {
-    public interface IShoppingListsService
+    public interface IShoppingListsService : IEntityService<ShoppingList>
     {
-        Task<ShoppingList> CreateAsync(ShoppingList shoppingList);
-        Task<IEnumerable<ShoppingList>> ReadAsync();
-        Task<ShoppingList?> ReadAsync(int id);
-        Task UpdateAsync(int id, ShoppingList shoppingList);
-        Task DeleteAsync(int id);
+        
     }
 }
