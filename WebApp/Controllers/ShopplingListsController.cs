@@ -16,6 +16,7 @@ namespace WebApp.Controllers
         }
 
         [HttpGet("{parentId}/Products")]
+        [Produces("application/xml")] //wymuszenie zwracania xml
         public async Task<IActionResult> GetForList(int parentId)
         {
             if (_service.ReadAsync(parentId) is null)

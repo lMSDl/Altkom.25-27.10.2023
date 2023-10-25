@@ -3,11 +3,26 @@ using Models;
 using Services.Bogus;
 using Services.Bogus.Fakers;
 using Services.Interfaces;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    /*.AddJsonOptions(x =>
+    {
+        x.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
+        x.JsonSerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.WriteAsString;
+        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    })*/
+    .AddNewtonsoftJson(x =>
+    {
+        x.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+        x.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore;
+        x.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+        x.SerializerSettings.DateFormatString = "yyy MM d ff:ss;mm";
+    })
+    .AddXmlSerializerFormatters(); //wsparcie dla XML
 
 builder.Services.AddSingleton<List<int>>(x => new List<int>
 {
