@@ -4,9 +4,9 @@ using Services.Interfaces;
 
 namespace Services.Bogus
 {
-    public abstract class EntityService<T> : IEntityService<T> where T : Entity
+    public class EntityService<T> : IEntityService<T> where T : Entity
     {
-        private ICollection<T> Entities { get; }
+        protected ICollection<T> Entities { get; }
 
         /*public EntityService()
         {

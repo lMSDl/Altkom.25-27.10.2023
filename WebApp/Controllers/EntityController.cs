@@ -32,7 +32,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, T entity)
+        public virtual async Task<IActionResult> Put(int id, T entity)
         {
             var localEntity = await _service.ReadAsync(id);
 

@@ -20,6 +20,9 @@ builder.Services.AddTransient<EntityFaker<ShoppingList>, ShoppingListFaker>();
 builder.Services.AddSingleton<IPeopleService, PeopleService>();
 builder.Services.AddTransient<EntityFaker<Person>, PersonFaker>();
 
+builder.Services.AddSingleton<IProductsService, ProductsService>();
+builder.Services.AddTransient<EntityFaker<Product>, ProductFaker>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
