@@ -36,7 +36,8 @@ namespace WebApp.Controllers
             _values[_values.IndexOf(oldValue)] = newValue;
         }
 
-        [HttpPut("{oldValue:int}")]
+        //Put: localhost:<port>/api/values/<oldValue>?newValue=<someValue>
+        [HttpPut("{oldValue:int}")] 
         public void Put2(int oldValue, int newValue)
         {
             _values[_values.IndexOf(oldValue)] = newValue;
