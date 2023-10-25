@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
+
+builder.Services.AddSingleton<List<int>>(x => new List<int>
+{
+    2,5,843,1,21
+});
 
 var app = builder.Build();
 
@@ -32,8 +38,10 @@ var values = new List<int>
 //Minimal API
 app.MapGet("/values", () => values);
 app.MapDelete("/values/{value:int}", /*[Authorize]*/ (int value) => values.Remove(value));
-app.MapPost("/values/{value:int}", (int value) => values.Add(value));
+app.MapPost("/values/{value:int:max(50)}", (int value) => values.Add(value));
 app.MapPut("/values/{oldValue:int}/{newValue:int}", (int oldValue, int newValue) =>  values[values.IndexOf(oldValue)] = newValue);
+
+app.MapControllers();
 
 app.Run();
 
