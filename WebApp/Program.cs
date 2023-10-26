@@ -46,9 +46,13 @@ builder.Services.AddTransient<EntityFaker<Product>, ProductFaker>();
 //zawieszenie automatycznej walidacji modelu
 //builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true); 
 
-builder.Services.AddFluentValidationAutoValidation();
 
-builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
+builder.Services.AddFluentValidationAutoValidation()
+    //automatyczna rejestracja walidatorów z assembly zawieraj¹cego wskazan¹ klasê
+    .AddValidatorsFromAssemblyContaining<Program>();
+
+//rêczna rejestracja walidatorów
+//builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
 
 
 var app = builder.Build();
