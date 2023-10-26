@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Interfaces;
+using WebApp.Filters;
 
 namespace WebApp.Controllers
 {
@@ -23,6 +24,12 @@ namespace WebApp.Controllers
                 return NotFound();
 
             return Ok(await _childController.FirdByShoppingListId(parentId));
+        }
+
+        [ServiceFilter(typeof(ConsoleLogFilter))]
+        public override Task<IActionResult> Post(ShoppingList entity)
+        {
+            return base.Post(entity);
         }
     }
 }

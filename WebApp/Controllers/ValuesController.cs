@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Filters;
 
 namespace WebApp.Controllers
 {
     //adnotacje dziedziczone z ApiController
     //[Route("api/[controller]")]
     //[ApiController] 
+    [ServiceFilter(typeof(LimiterFilter))]
     public class ValuesController : ApiController
     {
         public ValuesController(List<int> values)

@@ -6,7 +6,9 @@ using Models;
 using Services.Bogus;
 using Services.Bogus.Fakers;
 using Services.Interfaces;
+using System.Net.WebSockets;
 using System.Text.Json.Serialization;
+using WebApp.Filters;
 using WebApp.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,6 +56,9 @@ builder.Services.AddFluentValidationAutoValidation()
 //rêczna rejestracja walidatorów
 //builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
 
+builder.Services.AddTransient<ConsoleLogFilter>();
+builder.Services.AddSingleton<LimiterFilter>(x => new LimiterFilter(5));
+builder.Services.AddTransient<UniquePersonFilter>();
 
 var app = builder.Build();
 
@@ -68,12 +73,14 @@ app.Use(async (httpContext, next) =>
     await next(httpContext);
     Console.WriteLine("After Use1");
 });
-app.Use(async (httpContext, next) =>
+/*app.Use(async (httpContext, next) =>
 {
-    Console.WriteLine("Before Use2");
+    if (httpContext.GetEndpoint()?.DisplayName.Contains("ShoppingListsController.Post") ?? false)
+    Console.WriteLine("Before " + httpContext.Request.Method);
     await next(httpContext);
-    Console.WriteLine("After Use2");
-});
+    if (httpContext.GetEndpoint()?.DisplayName.Contains("ShoppingListsController.Post") ?? false)
+        Console.WriteLine("After " + httpContext.Request.Method);
+});*/
 
 
 var values = new List<int>
