@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Models;
 using Services.Bogus;
 using Services.Bogus.Fakers;
@@ -64,6 +65,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "WebAPI", Version = "v1" }))
     .AddSwaggerGenNewtonsoftSupport();
 
+builder.Services.AddResponseCompression(x =>
+{
+    x.Providers.Clear();
+
+    x.Providers.Add<GzipCompressionProvider>();
+    x.Providers.Add<BrotliCompressionProvider>();
+
+    x.EnableForHttps = true;
+});
+
+builder.Services.Configure<GzipCompressionProviderOptions>(x => x.Level = System.IO.Compression.CompressionLevel.Optimal);
+builder.Services.Configure<BrotliCompressionProviderOptions>(x => x.Level = System.IO.Compression.CompressionLevel.Optimal);
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,6 +88,8 @@ app.UseHttpsRedirection();
 
 app.UseSwagger();
 app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "SwaggerWebApi v1"));
+
+app.UseResponseCompression();
 
 app.Use(async (httpContext, next) =>
 {

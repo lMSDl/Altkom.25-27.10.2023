@@ -11,11 +11,19 @@ namespace ConsoleApp
 
         public WebApiClient(string baseAddress)
         {
-            _client = new HttpClient()
+            var handler = new HttpClientHandler
+            {
+                AutomaticDecompression = System.Net.DecompressionMethods.GZip //| System.Net.DecompressionMethods.Deflate
+            };
+
+
+            _client = new HttpClient(handler)
             {
                 BaseAddress = new Uri(baseAddress)
             };
             _client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+           // _client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("gzip"));
+            _client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate"));
         }
 
         public void Dispose()
