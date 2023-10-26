@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -5,6 +7,7 @@ using Services.Bogus;
 using Services.Bogus.Fakers;
 using Services.Interfaces;
 using System.Text.Json.Serialization;
+using WebApp.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +45,11 @@ builder.Services.AddTransient<EntityFaker<Product>, ProductFaker>();
 
 //zawieszenie automatycznej walidacji modelu
 //builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true); 
+
+builder.Services.AddFluentValidationAutoValidation();
+
+builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
+
 
 var app = builder.Build();
 
