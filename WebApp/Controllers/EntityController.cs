@@ -17,7 +17,7 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IEnumerable<T>> Get()
+        public virtual async Task<IEnumerable<T>> Get()
         {
             return (await _service.ReadAsync()).AsEnumerable();
         }

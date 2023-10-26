@@ -26,6 +26,11 @@ namespace ConsoleApp
             _client.DefaultRequestHeaders.AcceptEncoding.Add(StringWithQualityHeaderValue.Parse("deflate"));
         }
 
+        public void SetToken(string token)
+        {
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
         public void Dispose()
         {
             _client.Dispose();

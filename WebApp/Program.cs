@@ -1,8 +1,10 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.IdentityModel.Tokens;
 using Models;
 using Services.Bogus;
 using Services.Bogus.Fakers;
@@ -10,6 +12,7 @@ using Services.Interfaces;
 using System.Net.WebSockets;
 using System.Text.Json.Serialization;
 using WebApp.Filters;
+using WebApp.Services;
 using WebApp.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -79,6 +82,23 @@ builder.Services.Configure<GzipCompressionProviderOptions>(x => x.Level = System
 builder.Services.Configure<BrotliCompressionProviderOptions>(x => x.Level = System.IO.Compression.CompressionLevel.Optimal);
 
 
+builder.Services.AddTransient<AuthService>();
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(AuthService.Key),
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -90,6 +110,9 @@ app.UseSwagger();
 app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "SwaggerWebApi v1"));
 
 app.UseResponseCompression();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Use(async (httpContext, next) =>
 {
@@ -116,6 +139,8 @@ app.MapGet("/values", () => values);
 app.MapDelete("/values/{value:int}", /*[Authorize]*/ (int value) => values.Remove(value));
 app.MapPost("/values/{value:int:max(50)}", (int value) => values.Add(value));
 app.MapPut("/values/{oldValue:int}/{newValue:int}", (int oldValue, int newValue) =>  values[values.IndexOf(oldValue)] = newValue);
+
+app.MapGet("/login", (string login, string password, AuthService authService) => authService.Authenticate(login, password));
 
 app.MapControllers();
 
