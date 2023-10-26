@@ -30,5 +30,17 @@ namespace WebApp.Controllers
         {
             return base.Put(id, entity);
         }
+
+        public override async Task<IActionResult> Post(Product entity)
+        {
+            var products = await _service.ReadAsync();
+            if(products.Where(x => x.Name == entity.Name).Any(x => x.ShoppingListId == entity.ShoppingListId))
+            {
+                //ręczne dodanie błędu walidacji
+                ModelState.AddModelError(nameof(Product.Name), "Ten produkt już istnieje na tej liście");
+            }
+
+            return await base.Post(entity);
+        }
     }
 }

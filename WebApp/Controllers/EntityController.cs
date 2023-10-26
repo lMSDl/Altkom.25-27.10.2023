@@ -45,8 +45,15 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(T entity)
+        public virtual async Task<IActionResult> Post(T entity)
         {
+            //Ręczna walidacja modelu
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
             entity = await _service.CreateAsync(entity);
 
             return CreatedAtAction(nameof(Get), new { id = entity.Id }, entity);

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Bogus;
 using Services.Bogus.Fakers;
@@ -37,6 +38,10 @@ builder.Services.AddTransient<EntityFaker<Person>, PersonFaker>();
 
 builder.Services.AddSingleton<IProductsService, ProductsService>();
 builder.Services.AddTransient<EntityFaker<Product>, ProductFaker>();
+
+
+//zawieszenie automatycznej walidacji modelu
+//builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true); 
 
 var app = builder.Build();
 
