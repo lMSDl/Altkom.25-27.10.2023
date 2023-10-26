@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{528E6F98-567F-4B26-8F72-FE60F107A859}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{528E6F98-567F-4B26-8F72-FE60F107A859}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{11A9463F-9A3B-4AE6-978F-CD4B68BF5A1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{11A9463F-9A3B-4AE6-978F-CD4B68BF5A1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{17E31D50-FC4D-4730-AFF7-0EFE3C215241}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{17E31D50-FC4D-4730-AFF7-0EFE3C215241}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Bogus", "Services.Bogus\Services.Bogus.csproj", "{13B32789-C18B-4CCC-9AF3-6EE45B228846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Bogus", "Services.Bogus\Services.Bogus.csproj", "{13B32789-C18B-4CCC-9AF3-6EE45B228846}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{13B32789-C18B-4CCC-9AF3-6EE45B228846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13B32789-C18B-4CCC-9AF3-6EE45B228846}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13B32789-C18B-4CCC-9AF3-6EE45B228846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
