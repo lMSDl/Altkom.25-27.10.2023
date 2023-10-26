@@ -31,6 +31,7 @@ namespace WebApp.Controllers
             return base.Put(id, entity);
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public override async Task<IActionResult> Post(Product entity)
         {
             var products = await _service.ReadAsync();

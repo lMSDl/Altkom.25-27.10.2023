@@ -18,6 +18,9 @@ namespace WebApp.Controllers
 
         [HttpGet("{parentId}/Products")]
         [Produces("application/xml")] //wymuszenie zwracania xml
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetForList(int parentId)
         {
             if (_service.ReadAsync(parentId) is null)

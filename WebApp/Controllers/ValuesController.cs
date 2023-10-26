@@ -8,6 +8,7 @@ namespace WebApp.Controllers
     //[Route("api/[controller]")]
     //[ApiController] 
     [ServiceFilter(typeof(LimiterFilter))]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
     public class ValuesController : ApiController
     {
         public ValuesController(List<int> values)
