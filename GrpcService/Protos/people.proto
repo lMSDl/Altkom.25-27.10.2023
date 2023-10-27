@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package GrpcService.PeopleProtos;
+
+option csharp_namespace = "GrpcService.Protos";
+
+
+service PeopleService {
+	rpc Create(Person) returns (Person);
+	rpc Read(Void) returns (People);
+	rpc ReadById(Id) returns (Person);
+	rpc Update(People) returns (Void);
+	rpc Delete(Id) returns (Void);
+}
+
+
+message Id {
+	int32 value = 1;
+}
+
+message Person {
+	int32 id = 1;
+	string firstName = 2;
+	string lastName = 3;
+}
+
+message People {
+	repeated Person collection = 1;
+}
+
+message Void {
+
+}
