@@ -12,6 +12,7 @@ using System.Text.Json.Serialization;
 
 var signalR = new HubConnectionBuilder()
     .WithUrl("http://localhost:5145/SignalR/Demo")
+    .WithAutomaticReconnect()
     .Build();
 
 signalR.On<string>("TextMessage", x => TextMessage(x));
@@ -19,6 +20,24 @@ signalR.On<string>("TextMessage", x => TextMessage(x));
 void TextMessage(string x)
 {
     Console.WriteLine(x);
+}
+
+
+signalR.Reconnecting += SignalR_Reconnecting;
+signalR.Reconnected += SignalR_Reconnected;
+
+Task SignalR_Reconnected(string? arg)
+{
+    Console.WriteLine("Connected");
+    return Task.CompletedTask;
+}
+
+Task SignalR_Reconnecting(Exception? arg)
+{
+    if(arg != null)
+        Console.WriteLine(arg.Message);
+    Console.WriteLine("Reconnecting...");
+    return Task.CompletedTask;
 }
 
 await signalR.StartAsync();
