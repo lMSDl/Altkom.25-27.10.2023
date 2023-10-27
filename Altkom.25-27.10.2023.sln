@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Interfaces", "Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Bogus", "Services.Bogus\Services.Bogus.csproj", "{13B32789-C18B-4CCC-9AF3-6EE45B228846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWIN", "OWIN\OWIN.csproj", "{99AB6A5D-0193-435A-A6D4-48444FB91FB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5170031-AAB4-4E05-99EA-F6BB3FAF442D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99AB6A5D-0193-435A-A6D4-48444FB91FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99AB6A5D-0193-435A-A6D4-48444FB91FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99AB6A5D-0193-435A-A6D4-48444FB91FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99AB6A5D-0193-435A-A6D4-48444FB91FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
