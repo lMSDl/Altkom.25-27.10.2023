@@ -50,6 +50,18 @@ var group = Console.ReadLine();
 
 await signalR.SendAsync("JoinGroup", group);
 
+
+var signalRpeople = new HubConnectionBuilder()
+    .WithUrl("http://localhost:5145/SignalR/People")
+    .Build();
+
+signalRpeople.On<int>("PersonDeleted", x => Console.WriteLine($"Usunięto osobę o id {x}"));
+
+await signalRpeople.StartAsync();
+
+await signalRpeople.SendAsync("AddPerson", new Models.Person { FirstName = Console.ReadLine(), LastName = Console.ReadLine() });
+
+
 Console.ReadLine();
 
 static async Task WebAPI()

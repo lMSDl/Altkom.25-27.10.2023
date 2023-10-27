@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Models;
 using Services.Interfaces;
 using WebApp.Filters;
+using WebApp.SignalR;
 
 namespace WebApp.Controllers
 {
@@ -10,8 +12,11 @@ namespace WebApp.Controllers
     [Authorize]
     public class PeopleController : EntityController<Person>
     {
-        public PeopleController(IPeopleService service) : base(service)
+        private IHubContext<PeopleHub> _peopleHub;
+
+        public PeopleController(IPeopleService service, IHubContext<PeopleHub> peopleHub) : base(service)
         {
+            _peopleHub = peopleHub;
         }
 
         [Authorize(Roles = "Read")]
@@ -25,6 +30,15 @@ namespace WebApp.Controllers
         public override Task<IActionResult> Post(Person entity)
         {
             return base.Post(entity);
+        }
+
+        public override async Task<IActionResult> Delete(int id)
+        {
+            var result = await base.Delete(id);
+
+            await _peopleHub.Clients.All.SendAsync("PersonDeleted", id);
+
+            return result;
         }
     }
 }

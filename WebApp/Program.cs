@@ -134,6 +134,7 @@ app.Use(async (httpContext, next) =>
 
 
 app.MapHub<DemoHub>("SignalR/Demo");
+app.MapHub<PeopleHub>("SignalR/People");
 
 
 var values = new List<int>
