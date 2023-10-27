@@ -13,6 +13,7 @@ using System.Net.WebSockets;
 using System.Text.Json.Serialization;
 using WebApp.Filters;
 using WebApp.Services;
+using WebApp.SignalR;
 using WebApp.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -99,6 +100,8 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -130,10 +133,14 @@ app.Use(async (httpContext, next) =>
 });*/
 
 
+app.MapHub<DemoHub>("SignalR/Demo");
+
+
 var values = new List<int>
 {
     1, 5, 8, 23, 456
 };
+
 //Minimal API
 app.MapGet("/values", () => values);
 app.MapDelete("/values/{value:int}", /*[Authorize]*/ (int value) => values.Remove(value));
@@ -141,6 +148,7 @@ app.MapPost("/values/{value:int:max(50)}", (int value) => values.Add(value));
 app.MapPut("/values/{oldValue:int}/{newValue:int}", (int oldValue, int newValue) =>  values[values.IndexOf(oldValue)] = newValue);
 
 app.MapGet("/login", (string login, string password, AuthService authService) => authService.Authenticate(login, password));
+
 
 app.MapControllers();
 
