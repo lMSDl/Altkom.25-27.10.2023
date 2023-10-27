@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 
 namespace WebApp.SignalR
 {
+
+    [Authorize]
     public class DemoHub : Hub
     {
 
@@ -13,6 +16,7 @@ namespace WebApp.SignalR
             Console.WriteLine(Context.ConnectionId);
             await Clients.Caller.SendAsync("TextMessage", "Welcome in signalR!");
         }
+
 
         public Task SayHelloToOthers(string message)
         {

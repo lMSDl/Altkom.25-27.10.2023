@@ -9,9 +9,10 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+var webApiClient = new WebApiClient("http://localhost:5145/");
 
 var signalR = new HubConnectionBuilder()
-    .WithUrl("http://localhost:5145/SignalR/Demo")
+    .WithUrl("http://localhost:5145/SignalR/Demo", x => x.AccessTokenProvider = () => webApiClient.GetStringAsync("login?login=admin&password=admin"))
     .WithAutomaticReconnect()
     .Build();
 
